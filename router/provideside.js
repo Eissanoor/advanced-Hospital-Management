@@ -176,10 +176,10 @@ router.post("/sendEmail", async (req, res) =>
 
 })
 
-router.get("/", async (res, req) =>
+router.get("/", (req, res) =>
 {
-    
- res.send("HUMSTAFFING")
+  
+  res.send("humstaffing")
 
 
 })
