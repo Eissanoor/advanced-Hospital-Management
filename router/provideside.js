@@ -179,7 +179,7 @@ router.post("/sendEmail", async (req, res) =>
 router.get("/", async (res, req) =>
 {
     
- 
+ res.send("HUMSTAFFING")
 
 
 })
