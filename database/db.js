@@ -2,8 +2,8 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 dotenv.config({ path: "./config.env" });
-const DATABASE = process.env.DATABASE;
-const MONGODB_URL =DATABASE
+
+const MONGODB_URL = "mongodb+srv://eissanoor:Eisa.123@cluster0.bpuor.mongodb.net/humstaffing?retryWrites=true&w=majority";
 
 mongoose
   .connect(MONGODB_URL, {
