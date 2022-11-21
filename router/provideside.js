@@ -104,7 +104,7 @@ router.post("/emailVrifyOtp", async (req, res) => {
   }
 });
 
-router.post("/providerLogin", async (req, res) => {
+router.post("/Login", async (req, res) => {
   try {
     const email = req.body.email;
     const password = req.body.password;

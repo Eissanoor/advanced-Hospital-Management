@@ -35,7 +35,7 @@
         }
             }
         },
-         "/auth/login": {
+         "/Login": {
       "post": {
         "tags": ["Auth"],
         "summary": "Login user in system",
