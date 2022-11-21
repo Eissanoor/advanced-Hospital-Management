@@ -14,7 +14,7 @@
    
   ],
     "paths": {
-        "/providerRegister": {
+        "/signUp": {
             "post": {
                   "tags": ["Auth"],
         "summary": "Sign up new user in system",

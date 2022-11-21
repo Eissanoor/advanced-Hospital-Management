@@ -16,7 +16,7 @@ router.use(express.urlencoded({ extended: false }));
 router.use(bodyparser.json());
 router.use(express.json());
 
-router.post("/providerRegister", async (req, res) => {
+router.post("/signUp", async (req, res) => {
   let qdate = new Date();
   let date = qdate.toDateString();
   let Id = Math.floor(Math.random() * 100000);
