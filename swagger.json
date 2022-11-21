@@ -96,7 +96,7 @@
   "/passwordchangeotpSend": {
             "post": {
                   "tags": ["Auth"],
-        "summary": "Email varification System Through OTP",
+        "summary": "Password Change System Through OTP",
         "parameters": [
           {
             "in": "body",
