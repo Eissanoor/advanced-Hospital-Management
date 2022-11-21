@@ -77,7 +77,7 @@ router.post("/signUp", async (req, res) => {
 
     const registered = await registerEmp.save();
     console.log(registered);
-    res.status(201).send(registered);
+    res.status(201).json({ registered, token });
   } catch (e) {
     res.status(400).send(e);
   }
