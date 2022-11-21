@@ -172,13 +172,8 @@
       "properties": {
         "email": {
           "type": "string"
-        },
-        "password": {
-          "type": "string"
-        },
-        "code":{
-            "type":"string"
         }
+       
 
       }
     }
