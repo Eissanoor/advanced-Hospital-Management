@@ -3,55 +3,62 @@
     "info": {
         "version": "1.0.0",
         "title": "HumStaffing application",
-        "description": "HumStaffing application",
-        "license": {
-            "name": "MIT",
-            "url": "https://opensource.org/licenses/MIT"
-        }
+        "description": "HumStaffing application"
     },
-    "host": "https://humstaffing.herokuapp.com",
     "basePath": "/",
-    "schemes": [
-        "http",
-        "https"
-    ],
-    "consumes": [
-        "application/json"
-    ],
-    "produces": [
-        "application/json"
-    ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Auth API for authorize users in the system"
+    }
+   
+  ],
     "paths": {
         "/providerRegister": {
             "post": {
-                "tags": [
-                    "providerRegister"
-                ],
-                "description": "create provide registarion",
-                "parameters": [
-                    {
-                        "name": "user",
-                        "in": "body",
-                        "description": "User that we want to create",
-                        "schema": {
-                            "properties": {
-                                "email": {},
-                                "fullname": {},
-                                "password": {},
-                                "cpassword": {}
-                            }
-                        }
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "New user is created"
-                    }
-                }
+                  "tags": ["Auth"],
+        "summary": "Sign up new user in system",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SignInModel"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
             }
         }
+    },
+    "definitions": {
+ 
+   
+    "SignInModel": {
+      "properties": {
+       
+       "fullname":{
+        "type":"string"
+       },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+       
+       
+       
+      }
     }
+   
+
+  }
+
+    
 }
