@@ -20,7 +20,7 @@
       "in": "header"
     }
   },
-  
+
     "paths": {
         "/signUp": {
             "post": {
@@ -92,7 +92,31 @@
           }
         }
       }
-    }
+    },
+  "/passwordchangeotpSend": {
+            "post": {
+                  "tags": ["Auth"],
+        "summary": "Email varification System Through OTP",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ChangePassword"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+            }
+        }
+
+
+
     },
     "definitions": {
  
@@ -141,6 +165,21 @@
         "password": {
           "type": "string"
         }
+      }
+    },
+     "ChangePassword": {
+      "required": ["email", "password", "code"],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "code":{
+            "type":"string"
+        }
+
       }
     }
    
