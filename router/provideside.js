@@ -117,7 +117,7 @@ router.post("/Login", async (req, res) => {
     if (!useremail || !password) {
       res.status(400).json("Enter Correct email or password");
     } else if (ismatch) {
-      res.status(201).json("Successful");
+      res.status(201).json(useremail);
     } else {
       res.status(404).json("password are not matching");
     }
