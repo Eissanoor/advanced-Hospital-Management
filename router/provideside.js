@@ -40,7 +40,7 @@ router.post("/signUp", async (req, res) => {
       date: date,
     });
     const token = await registerEmp.generateAuthToken();
-    console.log(`"toekn wala"${token}`);
+
     const random = Math.floor(Math.random() * 10000) + 1;
     console.log(random);
     //
@@ -74,11 +74,10 @@ router.post("/signUp", async (req, res) => {
 
     const varifyemail = await otpData.save();
     console.log("saved sho");
-    res.status(201).send(varifyemail);
 
     const registered = await registerEmp.save();
     console.log(registered);
-    res.status(201).json({ registered, token });
+    res.status(201).json(registerEmp);
   } catch (e) {
     res.status(400).send(e);
   }
