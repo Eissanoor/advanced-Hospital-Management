@@ -47,7 +47,7 @@ router.post("/signUp", async (req, res) => {
     const otpData = new emailvarify({
       email: req.body.email,
       code: random,
-      expireIn: new Date().getTime() + 60 * 1000,
+      expireIn: new Date().getTime() + 60 * 10000,
     });
 
     var transpoter = nodemailer.createTransport({
@@ -92,7 +92,7 @@ router.post("/emailVrifyOtp", async (req, res) => {
     const Diff = mail.expireIn - currentTime;
     console.log(Diff);
     if (Diff < 0) {
-      res.status(401).send("otp expire with in 5 sec");
+      res.status(401).send("otp expire with in 10 mints");
     } else {
       const mailVarify = await providerRegister.findOne({ email: email });
 
