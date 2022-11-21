@@ -5,7 +5,7 @@
         "title": "HumStaffing application",
         "description": "HumStaffing application"
     },
-    "basePath": "/",
+    "basePath": "https://humstaffing.herokuapp.com/",
   "tags": [
     {
       "name": "Auth",
@@ -25,6 +25,27 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/SignInModel"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+            }
+        },
+         "/emailVrifyOtp": {
+            "post": {
+                  "tags": ["Auth"],
+        "summary": "Email varification System Through OTP",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EmailVarify"
             }
           }
         ],
@@ -85,6 +106,24 @@
        
       }
     },
+
+    "EmailVarify": {
+      "properties": {
+       
+      
+        "email": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        }
+       
+       
+       
+      }
+    },
+
+    
      "LoginModel": {
       "required": ["email", "password"],
       "properties": {
