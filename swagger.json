@@ -5,7 +5,7 @@
         "title": "HumStaffing application",
         "description": "HumStaffing application"
     },
-    "basePath": "/",
+    "basePath": "https://humstaffing.herokuapp.com/",
   "tags": [
     {
       "name": "Auth",
