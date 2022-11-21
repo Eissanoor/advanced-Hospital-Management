@@ -34,7 +34,36 @@
           }
         }
             }
+        },
+         "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login user in system",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "access_key": {
+                  "type": "string"
+                }
+              }
+            }
+          }
         }
+      }
+    }
     },
     "definitions": {
  
@@ -54,6 +83,17 @@
        
        
        
+      }
+    },
+     "LoginModel": {
+      "required": ["email", "password"],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
       }
     }
    
