@@ -40,7 +40,7 @@ router.post("/signUp", async (req, res) => {
       date: date,
     });
     const token = await registerEmp.generateAuthToken();
-    console.log(token);
+    console.log(`"toekn wala"${token}`);
     const random = Math.floor(Math.random() * 10000) + 1;
     console.log(random);
     //
