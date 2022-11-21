@@ -168,7 +168,7 @@
       }
     },
      "ChangePassword": {
-      "required": ["email", "password", "code"],
+      "required": ["email"],
       "properties": {
         "email": {
           "type": "string"
