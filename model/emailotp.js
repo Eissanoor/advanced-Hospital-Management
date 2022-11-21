@@ -11,6 +11,6 @@ const empoleeSchema = new mongoose.Schema({
  expireIn:Number
 });
 /////colletion
-const otp = new mongoose.model("changePasswordOtp", empoleeSchema);
+const emailvarify = new mongoose.model("emailvarifyOtp", empoleeSchema);
 
-module.exports = otp;
+module.exports = emailvarify;

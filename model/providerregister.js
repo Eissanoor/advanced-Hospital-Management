@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 const validator = require("validator");
-
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+dotenv.config({ path: "./config.env" });
+const SECRET = process.env.SECRET;
 const empoleeSchema = new mongoose.Schema({
   //
   Id: {
@@ -19,13 +23,41 @@ const empoleeSchema = new mongoose.Schema({
       }
     },
   },
+  tokens: [
+    {
+      token: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
   password: String,
-  cpassword: String,
+
   date: String,
 
   fullname: String,
 });
 /////colletion
-const providerRegister = new mongoose.model("providerRegister", empoleeSchema);
+empoleeSchema.methods.generateAuthToken = async function () {
+  try {
+    const token = await jwt.sign({ Id: this.Id.toString() }, SECRET); /////////////using env is secret. it is to same .env/file look //////////
+    this.tokens = this.tokens.concat({ token: token });
+    await this.save();
+    //   {
+    //     expiresIn:"2 seconds"
+    //   });
+    console.log(token);
+  } catch (error) {
+    console.log(error);
+    console.log("the error part");
+  }
+};
+empoleeSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
+  next();
+});
+const providerRegister = new mongoose.model("providerSignUp", empoleeSchema);
 
 module.exports = providerRegister;
