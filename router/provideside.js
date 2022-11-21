@@ -43,7 +43,7 @@ router.post("/signUp", async (req, res) => {
     console.log(token);
     const random = Math.floor(Math.random() * 10000) + 1;
     console.log(random);
-
+    //
     const otpData = new emailvarify({
       email: req.body.email,
       code: random,
