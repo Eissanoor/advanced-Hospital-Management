@@ -4,7 +4,7 @@ const validator = require("validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 dotenv.config({ path: "./config.env" });
-const SECRET = process.env.SECRET;
+const SECRET = "secret";
 const empoleeSchema = new mongoose.Schema({
   //
   Id: {
