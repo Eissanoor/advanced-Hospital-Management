@@ -2,9 +2,12 @@ const express = require("express");
 const router = new express.Router();
 const bodyparser = require("body-parser");
 const nodemailer = require("nodemailer");
+const path = require("path");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
 
+const CreateProfile = require("../model/createprofile");
 const providerRegister = require("../model/providerregister");
 const otp = require("../model/otp");
 const emailvarify = require("../model/emailotp");
@@ -15,6 +18,30 @@ router.use(bodyparser.urlencoded({ extended: true }));
 router.use(express.urlencoded({ extended: false }));
 router.use(bodyparser.json());
 router.use(express.json());
+
+const storage = multer.diskStorage({
+  destination: "./public/upload",
+  filename: function (req, file, cb) {
+    return cb(
+      null,
+      `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`
+    );
+  },
+});
+
+var upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000000000000000000 },
+});
+router.use("/profile", express.static("public/upload"));
+
+router.post("/upload", upload.single("profile"), (req, res) => {
+  console.log(req.file);
+  res.json({
+    success: 1,
+    profile_url: `https://humstaffing.herokuapp.com/profile/${req.file.filename}`,
+  });
+});
 
 router.post("/signUp", async (req, res) => {
   let qdate = new Date();
@@ -198,6 +225,56 @@ router.post("/changePassword", async (req, res) => {
     }
   } else {
     res.status(400).send("Invalid Otp");
+  }
+});
+
+router.post("/CreateProfile", upload.single("profile"), async (req, res) => {
+  try {
+    const {
+      email,
+
+      firstname,
+      lastname,
+      category,
+      gender,
+      location,
+      hourlyrange,
+      experience,
+      aboutme,
+      qalification,
+      certification,
+      speciality,
+      resume,
+    } = req.body;
+
+    const mail = await CreateProfile.findOne({ email: email });
+
+    if (mail) {
+      res.status(400).send("Email already present");
+    } else {
+      const registerEmp = new CreateProfile({
+        email: email,
+        profile: `https://humstaffing.herokuapp.com/profile/${req.file.filename}`,
+        firstname: firstname,
+        lastname: lastname,
+        category: category,
+        gender: gender,
+        location: location,
+        hourlyrange: hourlyrange,
+        experience: experience,
+        aboutme: aboutme,
+        qalification: qalification,
+        certification: certification,
+        speciality: speciality,
+        resume: resume,
+      });
+
+      const registered = await registerEmp.save();
+      console.log(registered);
+      res.status(201).json(registerEmp);
+    }
+  } catch (err) {
+    console.log(err);
   }
 });
 
