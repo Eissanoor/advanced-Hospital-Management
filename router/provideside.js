@@ -228,7 +228,7 @@ router.post("/changePassword", async (req, res) => {
   }
 });
 
-router.post("/CreateProfile", upload.single("profile"), async (req, res) => {
+router.post("/CreateProfile", upload.array("profile", 12), async (req, res) => {
   try {
     const {
       email,
@@ -266,7 +266,7 @@ router.post("/CreateProfile", upload.single("profile"), async (req, res) => {
         qalification: qalification,
         certification: certification,
         speciality: speciality,
-        resume: resume,
+        resume: `https://humstaffing.herokuapp.com/profile/${req.file.filename}`,
       });
 
       const registered = await registerEmp.save();
