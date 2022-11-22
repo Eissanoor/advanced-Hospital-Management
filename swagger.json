@@ -113,6 +113,27 @@
           }
         }
             }
+        },
+         "/changePassword": {
+            "post": {
+                  "tags": ["Auth"],
+        "summary": "Type New password",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewPassword"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+            }
         }
 
 
@@ -176,8 +197,24 @@
        
 
       }
-    }
-   
+    },
+   "NewPassword":{
+  "properties": {
+       
+      
+        "email": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+       "password":{
+        "type":"string"
+       }
+       
+       
+      }
+   }
 
   }
 
