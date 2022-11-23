@@ -15,7 +15,8 @@ const empoleeSchema = new mongoose.Schema({
       }
     },
   },
-  profile: Array,
+  profile: String,
+  resume: String,
   firstname: String,
   lastname: String,
   category: String,
@@ -27,7 +28,6 @@ const empoleeSchema = new mongoose.Schema({
   qalification: String,
   certification: String,
   speciality: String,
-  resume: Array,
 });
 /////colletion
 const CreateProfile = new mongoose.model("CreateProfile", empoleeSchema);

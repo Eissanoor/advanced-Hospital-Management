@@ -11,6 +11,7 @@ const CreateProfile = require("../model/createprofile");
 const providerRegister = require("../model/providerregister");
 const otp = require("../model/otp");
 const emailvarify = require("../model/emailotp");
+const { profile } = require("console");
 
 require("../database/db");
 
@@ -227,8 +228,13 @@ router.post("/changePassword", async (req, res) => {
     res.status(400).send("Invalid Otp");
   }
 });
-
-router.post("/CreateProfile", upload.array("profile", 12), async (req, res) => {
+//upload.array("profile", 12),
+//upload.single("profile"),
+const cpUpload = upload.fields([
+  { name: "profile", maxCount: 1 },
+  { name: "resume", maxCount: 1 },
+]);
+router.post("/CreateProfile", cpUpload, async (req, res) => {
   try {
     const {
       email,
@@ -244,7 +250,6 @@ router.post("/CreateProfile", upload.array("profile", 12), async (req, res) => {
       qalification,
       certification,
       speciality,
-      resume,
     } = req.body;
 
     const mail = await CreateProfile.findOne({ email: email });
@@ -254,7 +259,8 @@ router.post("/CreateProfile", upload.array("profile", 12), async (req, res) => {
     } else {
       const registerEmp = new CreateProfile({
         email: email,
-        profile: `https://humstaffing.herokuapp.com/profile/${req.file.filename}`,
+        profile: `https://humstaffing.herokuapp.com/profile/${req.files.profile[0].filename}`,
+        resume: `https://humstaffing.herokuapp.com/profile/${req.files.resume[0].filename}`,
         firstname: firstname,
         lastname: lastname,
         category: category,
@@ -266,9 +272,9 @@ router.post("/CreateProfile", upload.array("profile", 12), async (req, res) => {
         qalification: qalification,
         certification: certification,
         speciality: speciality,
-        resume: `https://humstaffing.herokuapp.com/profile/${req.file.filename}`,
       });
-
+      var a = req.files;
+      console.log(a.profile[0].filename);
       const registered = await registerEmp.save();
       console.log(registered);
       res.status(201).json(registerEmp);
