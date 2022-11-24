@@ -243,7 +243,7 @@ router.post("/CreateProfile", cpUpload, async (req, res) => {
       lastname,
       category,
       gender,
-      location,
+      city,
       hourlyrange,
       experience,
       aboutme,
@@ -265,7 +265,8 @@ router.post("/CreateProfile", cpUpload, async (req, res) => {
         lastname: lastname,
         category: category,
         gender: gender,
-        location: location,
+        city: city,
+
         hourlyrange: hourlyrange,
         experience: experience,
         aboutme: aboutme,
