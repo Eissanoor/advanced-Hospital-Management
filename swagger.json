@@ -138,7 +138,7 @@
          "/CreateProfile": {
             "post": {
                   "tags": ["Auth"],
-        "summary": "Type New password",
+        "summary": "CreateProfile",
         "parameters": [
           {
             "in": "body",
@@ -151,7 +151,7 @@
         ],
         "responses": {
           "default": {
-            "description": "successful operation"
+            "description": "Profile has been created"
           }
         }
             }
