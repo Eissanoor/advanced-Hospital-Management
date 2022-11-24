@@ -5,7 +5,7 @@
         "title": "HumStaffing application",
         "description": "HumStaffing application"
     },
-    "basePath": "https://humstaffing.herokuapp.com/",
+    "basePath": "/",
   "tags": [
     {
       "name": "Auth",
@@ -13,6 +13,14 @@
     }
    
   ],
+  "securityDefinitions": {
+    "Bearer" : {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+
     "paths": {
         "/signUp": {
             "post": {
@@ -84,7 +92,73 @@
           }
         }
       }
-    }
+    },
+  "/passwordchangeotpSend": {
+            "post": {
+                  "tags": ["Auth"],
+        "summary": "Password Change System Through OTP",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ChangePassword"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+            }
+        },
+         "/changePassword": {
+            "post": {
+                  "tags": ["Auth"],
+        "summary": "Type New password",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewPassword"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+            }
+        },
+         "/CreateProfile": {
+            "post": {
+                  "tags": ["Auth"],
+        "summary": "CreateProfile",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateProfile"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Profile has been created"
+          }
+        }
+            }
+        }
+
+
+
     },
     "definitions": {
  
@@ -119,7 +193,6 @@
         }
        
        
-
        
       }
     },
@@ -135,8 +208,77 @@
           "type": "string"
         }
       }
-    }
-   
+    },
+     "ChangePassword": {
+      "required": ["email"],
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+       
+
+      }
+    },
+   "NewPassword":{
+  "properties": {
+       
+      
+        "email": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+       "password":{
+        "type":"string"
+       }
+       
+       
+      }
+   },
+   "CreateProfile":{
+  "properties": {
+       
+      
+        "email": {
+          "type": "string"
+        },
+     "firstname":{
+      "type":"string"
+     },
+     "lastname":{
+
+      "type":"string"
+     },
+     "category":{
+      "type":"string"
+     },
+     "gender":{
+      "type":"string"
+     },
+     "hourlyrange":{
+      "type":"string"
+     },
+     "experience":{
+      "type":"string"
+     },
+     "aboutme":{
+      "type":"string"
+     },
+     "qalification":{
+      "type":"string"
+     },
+     "certification":{
+      "type":"string"
+     },
+     "speciality":{
+      "type":"string"
+     }
+
+
+       
+      }
+   }
 
   }
 

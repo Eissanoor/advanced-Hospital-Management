@@ -136,25 +136,113 @@
             }
         },
          "/CreateProfile": {
-            "post": {
-                  "tags": ["Auth"],
-        "summary": "CreateProfile",
+                 "post": {
+        "security": [{"Bearer": []}],
+        "tags": ["Collection"],
+        "summary": "Create user collection",
+        "consumes": ["multipart/form-data"],
         "parameters": [
           {
-            "in": "body",
-            "name": "body",
+            "in": "formData",
+            "name": "profile",
+            "type": "file",
             "required": true,
+            "description": "Files to upload"
+          },
+           {
+            "in": "formData",
+            "name": "resume",
+            "type": "file",
+            "required": true,
+            "description": "Files to upload"
+          },
+          {
+            "in": "formData",
+            "name": "email",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "firstname",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "lastname",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "category",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "gender",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "hourlyrange",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "experience",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "aboutme",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "qalification",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "certification",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "city",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "speciality",
+            "type": "string",
+            "required": true
+          }
+          
+          
+          
+          
+          
+        ],
+        "responses": {
+          "201": {
+            "description": "OK",
             "schema": {
+              "type": "object",
               "$ref": "#/definitions/CreateProfile"
             }
           }
-        ],
-        "responses": {
-          "default": {
-            "description": "Profile has been created"
-          }
         }
-            }
+      }
         }
 
 
