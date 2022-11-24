@@ -134,6 +134,27 @@
           }
         }
             }
+        },
+         "/CreateProfile": {
+            "post": {
+                  "tags": ["Auth"],
+        "summary": "Type New password",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateProfile"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+            }
         }
 
 
@@ -212,6 +233,49 @@
         "type":"string"
        }
        
+       
+      }
+   },
+   "CreateProfile":{
+  "properties": {
+       
+      
+        "email": {
+          "type": "string"
+        },
+     "firstname":{
+      "type":"string"
+     },
+     "lastname":{
+
+      "type":"string"
+     },
+     "category":{
+      "type":"string"
+     },
+     "gender":{
+      "type":"string"
+     },
+     "hourlyrange":{
+      "type":"string"
+     },
+     "experience":{
+      "type":"string"
+     },
+     "aboutme":{
+      "type":"string"
+     },
+     "qalification":{
+      "type":"string"
+     },
+     "certification":{
+      "type":"string"
+     },
+     "speciality":{
+      "type":"string"
+     }
+
+
        
       }
    }
