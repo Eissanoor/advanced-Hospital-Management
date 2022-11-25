@@ -47,7 +47,7 @@ router.post("/upload", upload.single("profile"), (req, res) => {
 router.post("/signUp", async (req, res) => {
   let qdate = new Date();
   let date = qdate.toDateString();
-  let Id = Math.floor(Math.random() * 100000);
+  let Id = Math.floor(Math.random() * 100000) + 1;
   let email = req.body.email;
   let fullname = req.body.fullname;
   let password = req.body.password;
@@ -236,6 +236,7 @@ const cpUpload = upload.fields([
 ]);
 router.post("/CreateProfile", cpUpload, async (req, res) => {
   try {
+    let Id = Math.floor(Math.random() * 100000) + 1;
     const {
       email,
 
@@ -258,6 +259,7 @@ router.post("/CreateProfile", cpUpload, async (req, res) => {
       res.status(400).send("Email already present");
     } else {
       const registerEmp = new CreateProfile({
+        Id: Id,
         email: email,
         profile: `https://humstaffing.herokuapp.com/profile/${req.files.profile[0].filename}`,
         resume: `https://humstaffing.herokuapp.com/profile/${req.files.resume[0].filename}`,
@@ -266,7 +268,6 @@ router.post("/CreateProfile", cpUpload, async (req, res) => {
         category: category,
         gender: gender,
         city: city,
-
         hourlyrange: hourlyrange,
         experience: experience,
         aboutme: aboutme,
@@ -282,6 +283,18 @@ router.post("/CreateProfile", cpUpload, async (req, res) => {
     }
   } catch (err) {
     console.log(err);
+  }
+});
+
+router.patch("/BasicInfo/:id", cpUpload, async (req, res) => {
+  try {
+    const _id = req.params.id;
+    const getmens = await CreateProfile.findByIdAndUpdate(_id, req.body, {
+      new: true,
+    });
+    res.status(201).send(getmens);
+  } catch (error) {
+    res.status(400).send(error);
   }
 });
 

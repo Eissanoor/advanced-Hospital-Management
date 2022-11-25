@@ -3,6 +3,7 @@ const validator = require("validator");
 const geocoder = require("../utils/geocoder");
 const empoleeSchema = new mongoose.Schema({
   //
+  Id: String,
 
   email: {
     type: String,
