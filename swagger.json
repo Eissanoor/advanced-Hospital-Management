@@ -254,8 +254,10 @@
             "name": "profile_ID ",
             "in": "path",
 
-            "description": "Claim id of one of claims",
-            "type": "string"
+            "type": "file",
+            "required": true,
+            "description": "Claim id of one of claims"
+           
           
           },
           {
