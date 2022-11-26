@@ -38,7 +38,7 @@ const empoleeSchema = new mongoose.Schema({
     },
     formattedAddress: String,
   },
-  hourlyrange: Number,
+  hourlyrange: String,
   experience: String,
   aboutme: String,
   qalification: String,

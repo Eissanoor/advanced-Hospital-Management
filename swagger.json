@@ -92,8 +92,8 @@
           }
         }
       }
-    },
-  "/passwordchangeotpSend": {
+        },
+          "/passwordchangeotpSend": {
             "post": {
                   "tags": ["Auth"],
         "summary": "Password Change System Through OTP",
@@ -243,8 +243,64 @@
           }
         }
       }
-        }
+        },
+         "/BasicInfo/:id": {
+      "patch": {
+        "security": [{"Bearer": []}],
+        "tags": ["BasicInfo"],
+        "summary": "/BasicInfo/:id",
+        "parameters": [
+          {
+            "name": "profile_ID ",
+            "in": "path",
 
+            "description": "Claim id of one of claims",
+            "type": "string"
+          
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                
+                "firstname": {
+                  "type": "string"
+                },
+                "lastname": {
+                  "type": "string"
+                },
+                "gender": {
+                  "type": "string"
+                },
+                "experience": {
+                  "type": "string"
+                },
+                "hourlyrange": {
+                  "type": "string"
+                },
+                 "city": {
+                  "type": "string"
+                }
+
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/BasicInfo"
+            }
+          }
+        }
+      }
+    }
+        
 
 
     },
@@ -268,7 +324,6 @@
        
       }
     },
-
     "EmailVarify": {
       "properties": {
        
@@ -284,8 +339,6 @@
        
       }
     },
-
-    
      "LoginModel": {
       "required": ["email", "password"],
       "properties": {
@@ -366,7 +419,34 @@
 
        
       }
-   }
+   },
+      "BasicInfo": {
+      "type": "object",
+      "properties": {
+        
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "hourlyrange": {
+          "type": "string"
+        },
+        "experience": {
+          "type": "string"
+        }
+      }
+    }
+  
+
+
 
   }
 

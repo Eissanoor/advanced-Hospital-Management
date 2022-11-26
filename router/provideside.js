@@ -286,7 +286,7 @@ router.post("/CreateProfile", cpUpload, async (req, res) => {
   }
 });
 
-router.patch("/BasicInfo/:id", cpUpload, async (req, res) => {
+router.patch("/BasicInfo/:params", cpUpload, async (req, res) => {
   try {
     const _id = req.params.id;
     const getmens = await CreateProfile.findByIdAndUpdate(_id, req.body, {
