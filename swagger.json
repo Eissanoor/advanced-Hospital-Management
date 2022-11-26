@@ -254,7 +254,7 @@
             "name": "profile_ID ",
             "in": "path",
 
-            "type": "file",
+            "type": "string",
             "required": true,
             "description": "Claim id of one of claims"
            
