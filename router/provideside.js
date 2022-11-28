@@ -286,15 +286,18 @@ router.post("/CreateProfile", cpUpload, async (req, res) => {
   }
 });
 
-router.patch("/BasicInfo/:params", cpUpload, async (req, res) => {
+router.patch("/BasicInfo/:id", async (req, res) => {
   try {
     const _id = req.params.id;
     const getmens = await CreateProfile.findByIdAndUpdate(_id, req.body, {
       new: true,
     });
+    console.log("khansaab");
     res.status(201).send(getmens);
+    console.log(getmens);
   } catch (error) {
     res.status(400).send(error);
+    console.log(error);
   }
 });
 
