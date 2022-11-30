@@ -4,30 +4,23 @@ const geocoder = require("../utils/geocoder");
 const empoleeSchema = new mongoose.Schema({
   //
   Id: String,
-
-  email: {
-    type: String,
-    required: true,
-    trim: true,
-    lowercase: true,
-    unique: true,
-    validate(value) {
-      if (!validator.isEmail(value)) {
-        throw new Error("invalid Email");
-      }
-    },
-  },
+  fburl: String,
+  instaurl: String,
+  linkedinurl: String,
+  twitterurl: String,
+  hourlypricestart: String,
+  hourlypriceend: String,
   profile: String,
   resume: String,
   firstname: String,
   lastname: String,
   category: String,
   gender: String,
-  city: {
+  Location: {
     type: String,
     required: [true, "Please add an address"],
   },
-  location: {
+  addresss: {
     type: {
       type: String,
       enum: ["Point"],
@@ -38,6 +31,7 @@ const empoleeSchema = new mongoose.Schema({
     },
     formattedAddress: String,
   },
+
   hourlyrange: String,
   experience: String,
   aboutme: String,
@@ -49,9 +43,9 @@ const empoleeSchema = new mongoose.Schema({
 //create geolocation
 
 empoleeSchema.pre("save", async function (next) {
-  const loc = await geocoder.geocode(this.city);
+  const loc = await geocoder.geocode(this.Location);
   console.log(loc);
-  this.location = {
+  this.addresss = {
     type: "Point",
     coordinates: [loc[0].longitude, loc[0].latitude],
     formattedAddress: loc[0].formattedAddress,

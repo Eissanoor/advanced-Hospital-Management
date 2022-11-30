@@ -156,12 +156,7 @@
             "required": true,
             "description": "Files to upload"
           },
-          {
-            "in": "formData",
-            "name": "email",
-            "type": "string",
-            "required": true
-          },
+          
           {
             "in": "formData",
             "name": "firstname",
@@ -215,15 +210,40 @@
             "name": "certification",
             "type": "string"
           },
-          {
-            "in": "formData",
-            "name": "city",
-            "type": "string",
-            "required": true
-          },
+         
           {
             "in": "formData",
             "name": "speciality",
+            "type": "string",
+            "required": true
+          },
+           {
+            "in": "formData",
+            "name": "Location",
+            "type": "string",
+            "required": true
+          },
+           {
+            "in": "formData",
+            "name": "fburl",
+            "type": "string",
+            "required": true
+          },
+           {
+            "in": "formData",
+            "name": "instaurl",
+            "type": "string",
+            "required": true
+          },
+           {
+            "in": "formData",
+            "name": "linkedinurl",
+            "type": "string",
+            "required": true
+          },
+           {
+            "in": "formData",
+            "name": "twitterurl",
             "type": "string",
             "required": true
           }
@@ -301,7 +321,28 @@
           }
         }
       }
-    }
+    },
+     "/addJob": {
+            "post": {
+                  "tags": ["Auth"],
+        "summary": "Add Jobs Assignment System",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addJob"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+            }
+        }
         
 
 
@@ -383,9 +424,7 @@
   "properties": {
        
       
-        "email": {
-          "type": "string"
-        },
+        
      "firstname":{
       "type":"string"
      },
@@ -442,6 +481,48 @@
           "type": "string"
         },
         "experience": {
+          "type": "string"
+        }
+      }
+    },
+     "addJob": {
+      "type": "object",
+      "properties": {
+        
+        "positionTitle": {
+          "type": "string"
+        },
+        "hospital_Faculty": {
+          "type": "string"
+        },
+        "speciality": {
+          "type": "string"
+        },
+        "jod_duration": {
+          "type": "string"
+        },
+        "hourlyRate": {
+          "type": "string"
+        },
+        "shift": {
+          "type": "string"
+        },
+        "from": {
+          "type": "integer"
+        },
+        "to": {
+          "type": "integer"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "Date": {
           "type": "string"
         }
       }

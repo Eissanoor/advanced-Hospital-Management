@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 
+const addJob = require("../model/addjob");
 const CreateProfile = require("../model/createprofile");
 const providerRegister = require("../model/providerregister");
 const otp = require("../model/otp");
@@ -238,49 +239,51 @@ router.post("/CreateProfile", cpUpload, async (req, res) => {
   try {
     let Id = Math.floor(Math.random() * 100000) + 1;
     const {
-      email,
-
       firstname,
       lastname,
       category,
       gender,
-      city,
-      hourlyrange,
+      Location,
+      hourlypricestart,
+      hourlypriceend,
       experience,
       aboutme,
       qalification,
       certification,
       speciality,
+      fburl,
+      instaurl,
+      linkedinurl,
+      twitterurl,
     } = req.body;
 
-    const mail = await CreateProfile.findOne({ email: email });
+    const registerEmp = new CreateProfile({
+      Id: Id,
 
-    if (mail) {
-      res.status(400).send("Email already present");
-    } else {
-      const registerEmp = new CreateProfile({
-        Id: Id,
-        email: email,
-        profile: `https://humstaffing.herokuapp.com/profile/${req.files.profile[0].filename}`,
-        resume: `https://humstaffing.herokuapp.com/profile/${req.files.resume[0].filename}`,
-        firstname: firstname,
-        lastname: lastname,
-        category: category,
-        gender: gender,
-        city: city,
-        hourlyrange: hourlyrange,
-        experience: experience,
-        aboutme: aboutme,
-        qalification: qalification,
-        certification: certification,
-        speciality: speciality,
-      });
-      var a = req.files;
-      console.log(a.profile[0].filename);
-      const registered = await registerEmp.save();
-      console.log(registered);
-      res.status(201).json(registerEmp);
-    }
+      profile: `https://humstaffing.herokuapp.com/profile/${req.files.profile[0].filename}`,
+      resume: `https://humstaffing.herokuapp.com/profile/${req.files.resume[0].filename}`,
+      firstname: firstname,
+      lastname: lastname,
+      category: category,
+      gender: gender,
+      experience: experience,
+      aboutme: aboutme,
+      Location: Location,
+      hourlypricestart: hourlypricestart,
+      hourlypriceend: hourlypriceend,
+      qalification: qalification,
+      certification: certification,
+      speciality: speciality,
+      fburl: fburl,
+      instaurl: instaurl,
+      linkedinurl: linkedinurl,
+      twitterurl: twitterurl,
+    });
+    var a = req.files;
+    console.log(a.profile[0].filename);
+    const registered = await registerEmp.save();
+    console.log(registered);
+    res.status(201).json(registerEmp);
   } catch (err) {
     console.log(err);
   }
@@ -298,6 +301,50 @@ router.patch("/BasicInfo/:id", async (req, res) => {
   } catch (error) {
     res.status(400).send(error);
     console.log(error);
+  }
+});
+
+router.post("/addJob", async (req, res) => {
+  try {
+    let qdate = new Date();
+    let date =
+      qdate.getDay() + "/" + qdate.getMonth() + "/" + qdate.getFullYear();
+    const {
+      positionTitle,
+      hospital_Faculty,
+      speciality,
+      jod_duration,
+      hourlyRate,
+      shift,
+      from,
+      to,
+      startDate,
+      endDate,
+      description,
+    } = req.body;
+    const totalhours = to - from;
+
+    const addjob = new addJob({
+      Date: date,
+      positionTitle: positionTitle,
+      hospital_Faculty: hospital_Faculty,
+      speciality: speciality,
+      jod_duration: jod_duration,
+      hourlyRate: hourlyRate,
+      shift: shift,
+      from: from,
+      to: to,
+      totalhours: totalhours,
+      startDate: startDate,
+      endDate: endDate,
+      description: description,
+    });
+    const registered = await addjob.save();
+    res.status(201).send(registered);
+  } catch (err) {
+    console.log("error");
+
+    console.log(err);
   }
 });
 
