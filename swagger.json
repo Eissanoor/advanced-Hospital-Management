@@ -348,7 +348,6 @@
 
     },
     "definitions": {
- 
    
     "SignInModel": {
       "properties": {
@@ -525,7 +524,7 @@
         "Date": {
           "type": "string"
         }
-        
+
       }
     }
   
