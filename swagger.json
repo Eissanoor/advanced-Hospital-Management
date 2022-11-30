@@ -520,10 +520,8 @@
         },
         "description": {
           "type": "string"
-        },
-        "Date": {
-          "type": "string"
         }
+       
 
       }
     }
