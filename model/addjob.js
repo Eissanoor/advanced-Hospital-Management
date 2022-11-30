@@ -6,7 +6,7 @@ const empoleeSchema = new mongoose.Schema({
   hospital_Faculty: String,
   speciality: String,
   jod_duration: String,
-  hourlyRate: String,
+  hourlyRate: Number,
   shift: String,
   from: Number,
   to: Number,

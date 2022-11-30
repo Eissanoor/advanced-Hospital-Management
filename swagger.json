@@ -502,7 +502,7 @@
           "type": "string"
         },
         "hourlyRate": {
-          "type": "string"
+          "type": "integer"
         },
         "shift": {
           "type": "string"
