@@ -288,7 +288,10 @@ router.post("/CreateProfile", cpUpload, async (req, res) => {
     console.log(err);
   }
 });
-
+router.get("/CreateProfile", async (req, res) => {
+  const getorder = await CreateProfile.find({});
+  res.status(201).send(getorder);
+});
 router.patch("/BasicInfo/:id", async (req, res) => {
   try {
     const _id = req.params.id;
