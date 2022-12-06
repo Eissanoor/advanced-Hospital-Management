@@ -5,8 +5,9 @@ const nodemailer = require("nodemailer");
 const path = require("path");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const cookieparser = require("cookie-parser");
 const multer = require("multer");
-
+const auth = require("../middleware/auth");
 const addJob = require("../model/addjob");
 const CreateProfile = require("../model/createprofile");
 const providerRegister = require("../model/providerregister");
@@ -15,7 +16,7 @@ const emailvarify = require("../model/emailotp");
 const { profile } = require("console");
 
 require("../database/db");
-
+router.use(cookieparser());
 router.use(bodyparser.urlencoded({ extended: true }));
 router.use(express.urlencoded({ extended: false }));
 router.use(bodyparser.json());
@@ -52,7 +53,7 @@ router.post("/signUp", async (req, res) => {
   let email = req.body.email;
   let fullname = req.body.fullname;
   let password = req.body.password;
-
+  console.log(` this is cookie ${req.cookies.jwt}`);
   const mail = await providerRegister.findOne({ email: email });
   console.log(mail);
   if (mail) {
@@ -142,7 +143,7 @@ router.post("/Login", async (req, res) => {
     console.log(useremail);
     const token = await useremail.generateAuthToken();
     const ismatch = await bcrypt.compare(password, useremail.password);
-
+    res.cookie("jwt", token, { httpOnly: true });
     if (!useremail || !password) {
       res.status(400).json("Enter Correct email or password");
     } else if (ismatch) {
@@ -351,8 +352,31 @@ router.post("/addJob", async (req, res) => {
   }
 });
 
-router.get("/", (req, res) => {
+router.get("/", auth, (req, res) => {
+  console.log(` this is cookie ${req.cookies.jwt}`);
   res.send("humstaffing");
 });
 
+router.get("/secret", auth, (req, res) => {
+  res.send("secret da der");
+});
+router.get("/logout", auth, async (req, res) => {
+  try {
+    console.log(req.user);
+    /////////////////////////////////
+    ///////////logout cookies
+    res.clearCookie("jwt");
+
+    console.log("logout");
+    await req.user.save();
+    console.log("sai shoo");
+    res.send("Logout user will be done");
+
+    /////////
+  } catch (error) {
+    res.status(500).send("the error part");
+    console.log("the error part");
+    res.status(500).send(error);
+  }
+});
 module.exports = router;

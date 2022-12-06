@@ -40,7 +40,8 @@ const empoleeSchema = new mongoose.Schema({
 /////colletion
 empoleeSchema.methods.generateAuthToken = async function () {
   try {
-    const token = await jwt.sign({ _id: this._id.toString() }, SECRET); /////////////using env is secret. it is to same .env/file look //////////
+    const token = await jwt.sign({ _id: this._id.toString() }, SECRET);
+    /////////////using env is secret. it is to same .env/file look //////////
     this.tokens = this.tokens.concat({ token: token });
     await this.save();
     //   {
@@ -48,6 +49,7 @@ empoleeSchema.methods.generateAuthToken = async function () {
     //   });
 
     console.log(token);
+    return token;
   } catch (error) {
     console.log(error);
     console.log("the error part");
@@ -59,6 +61,6 @@ empoleeSchema.pre("save", async function (next) {
   }
   next();
 });
-const providerRegister = new mongoose.model("providerSignUp", empoleeSchema);
+const providerRegister = new mongoose.model("SignUp", empoleeSchema);
 
 module.exports = providerRegister;
