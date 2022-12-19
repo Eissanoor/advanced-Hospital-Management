@@ -7,7 +7,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 ////////////
 require("./database/db");
+var cors = require("cors");
 
+app.use(cors());
 //---------------------
 console.log("khansaab");
 var provideside = require("./router/provideside");
