@@ -13,16 +13,18 @@ const auth = async (req, res, next) => {
     const user = await Register.findOne({ _id: varifyuser._id });
     console.log("sai");
     // console.log(user.email)
-    console.log(user.name);
+
     console.log("sai");
     console.log(user);
 
     req.token = token;
     req.user = user;
+
     next();
   } catch (error) {
-    res.send("SESSION EXPIRE");
+    console.log(error);
     res.send(error);
+    res.send("SESSION EXPIRE");
   }
 };
 module.exports = auth;

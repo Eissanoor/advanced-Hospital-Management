@@ -38,21 +38,19 @@ const empoleeSchema = new mongoose.Schema({
   fullname: String,
 });
 /////colletion
-empoleeSchema.methods.generateAuthToken = async function () {
+empoleeSchema.methods.generateAuthToken = async function (data) {
   try {
-    const token = await jwt.sign({ _id: this._id.toString() }, SECRET);
-    /////////////using env is secret. it is to same .env/file look //////////
+    let params = {
+      _id: this._id,
+      email: this.email,
+      password: this.password,
+    };
+    var token = jwt.sign(params, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     this.tokens = this.tokens.concat({ token: token });
     await this.save();
-    //   {
-    //     expiresIn:"2 seconds"
-    //   });
-
-    console.log(token);
     return token;
-  } catch (error) {
-    console.log(error);
-    console.log("the error part");
+  } catch (e) {
+    console.log(e);
   }
 };
 empoleeSchema.pre("save", async function (next) {

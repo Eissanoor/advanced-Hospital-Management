@@ -1,5 +1,6 @@
 const express = require("express");
 const router = new express.Router();
+//317149
 const bodyparser = require("body-parser");
 const nodemailer = require("nodemailer");
 const path = require("path");
@@ -21,7 +22,6 @@ router.use(bodyparser.urlencoded({ extended: true }));
 router.use(express.urlencoded({ extended: false }));
 router.use(bodyparser.json());
 router.use(express.json());
-
 const storage = multer.diskStorage({
   destination: "./public/upload",
   filename: function (req, file, cb) {
@@ -45,6 +45,25 @@ router.post("/upload", upload.single("profile"), (req, res) => {
     profile_url: `https://humstaffing.herokuapp.com/profile/${req.file.filename}`,
   });
 });
+
+var jwttoken = async (req, res, next) => {
+  var token = req.headers.autherization;
+  console.log(token);
+
+  token = token.split(" ")[1];
+  const varifyuser = jwt.verify(
+    token,
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  );
+  console.log(varifyuser);
+  const user = await providerRegister.findOne({ _id: varifyuser._id });
+  console.log(user);
+
+  req.token = token;
+  req.user = user;
+
+  next();
+};
 
 router.post("/signUp", async (req, res) => {
   let qdate = new Date();
@@ -70,7 +89,7 @@ router.post("/signUp", async (req, res) => {
       date: date,
     });
     const token = await registerEmp.generateAuthToken();
-
+    res.cookie("jwt", token, { httpOnly: true });
     const random = Math.floor(Math.random() * 10000) + 1;
     console.log(random);
     //
@@ -141,19 +160,19 @@ router.post("/Login", async (req, res) => {
 
     const useremail = await providerRegister.findOne({ email: email });
     console.log(useremail);
-    const token = await useremail.generateAuthToken();
     const ismatch = await bcrypt.compare(password, useremail.password);
-    res.cookie("jwt", token, { httpOnly: true });
+    const token = await useremail.generateAuthToken();
+    // res.cookie("jwt", token, { httpOnly: true });
     if (!useremail || !password) {
-      res.status(400).json("Enter Correct email or password");
+      res.status(400).json({ masseg: "Enter Correct email or password" });
     } else if (ismatch) {
-      res.status(201).json(useremail);
+      res.status(200).json(useremail);
     } else {
-      res.status(404).json("password are not matching");
+      res.status(404).json({ masseg: "password are not matching" });
     }
   } catch (error) {
     console.log(error);
-    res.status(400).json("invalid email");
+    res.status(400).json({ masseg: "invalid email" });
   }
 });
 
@@ -168,7 +187,7 @@ router.post("/passwordchangeotpSend", async (req, res) => {
       const otpData = new otp({
         email: req.body.email,
         code: random,
-        expireIn: new Date().getTime() + 60 * 1000,
+        expireIn: new Date().getTime() + 300 * 1000,
       });
 
       var transpoter = nodemailer.createTransport({
@@ -289,9 +308,10 @@ router.post("/CreateProfile", cpUpload, async (req, res) => {
     console.log(err);
   }
 });
-router.get("/CreateProfile", async (req, res) => {
-  const getorder = await CreateProfile.find({});
-  res.status(201).send(getorder);
+router.get("/CreateProfile/:id", async (req, res) => {
+  const _id = req.params.id;
+  const getmens = await CreateProfile.findById(_id);
+  res.status(201).send(getmens);
 });
 router.patch("/BasicInfo/:id", async (req, res) => {
   try {
@@ -352,31 +372,21 @@ router.post("/addJob", async (req, res) => {
   }
 });
 
-router.get("/", auth, (req, res) => {
-  console.log(` this is cookie ${req.cookies.jwt}`);
-  res.send("humstaffing");
+router.get("/", jwttoken, async (req, res) => {
+  const getorder = req.user;
+  res.json(getorder);
+  // console.log(` this is cookie ${req.cookies.jwt}`);
 });
 
-router.get("/secret", auth, (req, res) => {
+router.get("/secret", jwttoken, (req, res) => {
   res.send("secret da der");
 });
-router.get("/logout", auth, async (req, res) => {
+router.get("/logout", jwttoken, async (req, res) => {
   try {
-    console.log(req.user);
-    /////////////////////////////////
-    ///////////logout cookies
-    res.clearCookie("jwt");
-
-    console.log("logout");
-    await req.user.save();
-    console.log("sai shoo");
-    res.send("Logout user will be done");
-
-    /////////
-  } catch (error) {
-    res.status(500).send("the error part");
-    console.log("the error part");
-    res.status(500).send(error);
+    res.send("logoutshow");
+  } catch (e) {
+    console.log(e);
   }
 });
+router.get("/email", async (req, res) => {});
 module.exports = router;
